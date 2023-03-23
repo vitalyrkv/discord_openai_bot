@@ -21,4 +21,4 @@ const client = new Client({
   });
 client.login(token)
 
-//openai doesn't seem give coherent answers for some reason
+//openai doesn't seem to give coherent answers for some reason
