@@ -1,4 +1,4 @@
-const token = "my_discord_token_here"
+const token = process.env.BOT_TOKEN
 const { ask } = require("./ai.js");
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const client = new Client({

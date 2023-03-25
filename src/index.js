@@ -18,10 +18,18 @@ client.on('messageCreate', (message) => {
     console.log(message.createdAt.toDateString())
 })
 
+client.on('interactionCreate', (interaction) => {
+     //check for the type of interaction, not to end up with wrong props and methods
+     if(interaction.isChatInputCommand()){
+        console.log('is input, very nice ')
+        interaction.reply({ content: 'Testring /order command went thru!' })
+     }
+})
+
 async function main() {
     const commands = [{
-        name: 'try_command',
-        description: 'testing command' 
+        name: 'order',
+        description: 'Order something...' 
     }]
     try{
         console.log('Started refreshing application (/) commands')
