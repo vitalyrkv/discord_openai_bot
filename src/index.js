@@ -1,16 +1,16 @@
-import { Client } from 'discord.js'
+import { Client, Routes } from 'discord.js'
 import { config } from 'dotenv'
+import { REST } from '@discordjs/rest'
 config() //loads any environment var 
 
 const client = new Client({ intents: ['Guilds', 'GuildMessages', 'MessageContent']}) //allows to recieve events related to guilds and guild messages etc
 const TOKEN = process.env.BOT_TOKEN
-
-client.login(TOKEN)
+const CLIENT_ID = process.env.CLIENT_ID
+const GUILD_ID = process.env.GUILD_ID
+const rest = new REST({ version: '10'}).setToken(TOKEN)
 
 //ready event is fired when bot is connected
-client.on('ready', () => {
-    console.log(`${client.user.tag} has logged in`) 
-})
+client.on('ready', () => { console.log(`${client.user.tag} has logged in`) })
 
 //fired when user sends a message
 client.on('messageCreate', (message) => {
@@ -18,3 +18,19 @@ client.on('messageCreate', (message) => {
     console.log(message.createdAt.toDateString())
 })
 
+async function main() {
+    const commands = [{
+        name: 'try_command',
+        description: 'testing command' 
+    }]
+    try{
+        console.log('Started refreshing application (/) commands')
+        //put request to discord api to update a certain command
+        await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+            body: commands
+        })
+        client.login(TOKEN)
+    } catch(err) { console.log(err) }
+}
+
+main()
