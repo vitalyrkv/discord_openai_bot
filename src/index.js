@@ -1,10 +1,13 @@
 import { Client, Routes } from 'discord.js'
 import { config } from 'dotenv'
 import { REST } from '@discordjs/rest'
+import orderCommand from '../utils/command_options.js'
 import geocode from '../utils/geocode.cjs'
 const geocode1   =  geocode
 import forecast from '../utils/forecast.cjs'
 const forecast1   =  forecast
+
+
 config() //loads any environment var 
 
 const client = new Client({ intents: ['Guilds', 'GuildMessages', 'MessageContent']}) //allows to recieve events related to guilds and guild messages etc
@@ -35,23 +38,16 @@ client.on('interactionCreate', (interaction) => {
                     interaction.reply({ content: reply })
                 })
             })
+        }else if(interaction.commandName==='order'){
+            const food = interaction.options.getString('food')
+            const drink = interaction.options.getString('drink')
+            interaction.reply({ content: `You ordered ${food} and ${drink}`})
         }
      }
 })
 
 async function main() {
-    const commands = [{
-        name: 'weather',
-        description: 'Find out current weather',
-        options: [
-            {
-                name: 'city',
-                description: 'Get current weather for this city',
-                type: 3, //string
-                required: true
-            }
-        ]
-    }]
+        const commands = [orderCommand.toJSON()]
     try{
         console.log('Started refreshing application (/) commands')
         //put request to discord api to update a certain command
