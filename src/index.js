@@ -46,7 +46,7 @@ async function main() {
         options: [
             {
                 name: 'city',
-                description: 'get current weather for this city',
+                description: 'Get current weather for this city',
                 type: 3, //string
                 required: true
             }
