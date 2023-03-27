@@ -27,4 +27,4 @@ const orderCommand = new SlashCommandBuilder()
             value: 'Orange Juice'
         }))
 
-export default orderCommand
+export default orderCommand.toJSON()

@@ -1,7 +1,10 @@
-import { Client, Routes } from 'discord.js'
+import { Client, Routes, User } from 'discord.js'
 import { config } from 'dotenv'
 import { REST } from '@discordjs/rest'
-import orderCommand from '../utils/command_options.js'
+import OrderCommand from '../utils/commands/command_options.js'
+import RolesCommand from '../utils/commands/roles.js'
+import UsersCommand from '../utils/commands/user.js'
+import ChannelsCommand from '../utils/commands/channel.js'
 import geocode from '../utils/geocode.cjs'
 const geocode1   =  geocode
 import forecast from '../utils/forecast.cjs'
@@ -42,12 +45,14 @@ client.on('interactionCreate', (interaction) => {
             const food = interaction.options.getString('food')
             const drink = interaction.options.getString('drink')
             interaction.reply({ content: `You ordered ${food} and ${drink}`})
+        }else if(interaction.commandName==='addrole') {
+            interaction.reply({ content: 'New role added'})
         }
      }
 })
 
 async function main() {
-        const commands = [orderCommand.toJSON()]
+        const commands = [OrderCommand, RolesCommand, UsersCommand, ChannelsCommand]
     try{
         console.log('Started refreshing application (/) commands')
         //put request to discord api to update a certain command
