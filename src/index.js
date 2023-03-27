@@ -1,7 +1,7 @@
 import { Client, Routes, User } from 'discord.js'
 import { config } from 'dotenv'
 import { REST } from '@discordjs/rest'
-import OrderCommand from '../utils/commands/command_options.js'
+import OrderCommand from '../utils/commands/order.js'
 import RolesCommand from '../utils/commands/roles.js'
 import UsersCommand from '../utils/commands/user.js'
 import ChannelsCommand from '../utils/commands/channel.js'
@@ -10,6 +10,7 @@ import BanCommand from '../utils/commands/ban.js'
 import geocode from '../utils/geocode.cjs'
 const geocode1   =  geocode
 import forecast from '../utils/forecast.cjs'
+import { ActionRowBuilder, SelectMenuBuilder } from '@discordjs/builders'
 const forecast1   =  forecast
 
 
@@ -35,7 +36,7 @@ client.on('interactionCreate', (interaction) => {
      //check for the type of interaction, not to end up with wrong props and methods
      if(interaction.isChatInputCommand()){
         const city  = interaction.options.getString('city')//extract the argument
-        if(interaction.commandName==='weather'){
+        if(interaction.commandName==='weather'){ //improve the stuff below
             geocode1(city, (error, { latitude, longitude } = {}) => {
                 forecast1(latitude, longitude,  (error, { location, current }) => {
                     console.log('Error', error)
@@ -46,7 +47,17 @@ client.on('interactionCreate', (interaction) => {
         }else if(interaction.commandName==='order'){
             const food = interaction.options.getString('food')
             const drink = interaction.options.getString('drink')
-            interaction.reply({ content: `You ordered ${food} and ${drink}`})
+            const actionRowComponent = new ActionRowBuilder().setComponents(
+                new SelectMenuBuilder()
+                    .setCustomId('food_options')
+                    .setOptions([
+                        { label: 'Cake', value: 'cake' },
+                        { label: 'Pizza', value: 'pizza', },
+                        { label: 'Sushi', value: 'sushi' }
+                ])
+            )
+            interaction.reply({ components: [actionRowComponent.toJSON()] })
+            //interaction.reply({ content: `You ordered ${food} and ${drink}`})
         }else if(interaction.commandName==='addrole') {
             interaction.reply({ content: 'New role added'})
         }
