@@ -56,11 +56,26 @@ client.on('interactionCreate', (interaction) => {
                         { label: 'Sushi', value: 'sushi' }
                 ])
             )
-            interaction.reply({ components: [actionRowComponent.toJSON()] })
+            const actionRowComponentDrinks = new ActionRowBuilder().setComponents(
+                new SelectMenuBuilder()
+                    .setCustomId('drink_options')
+                    .setOptions([
+                        { label: 'Water', value: 'water', emoji: {
+                            "id": null,
+                            "name": "🔥"
+                          }},
+                        { label: 'Ginger Ale', value: 'ginger ale', },
+                        { label: 'OJ', value: 'orange juice' }
+                ])
+            )
+            interaction.reply({ components: [actionRowComponent.toJSON(), actionRowComponentDrinks.toJSON()] })
             //interaction.reply({ content: `You ordered ${food} and ${drink}`})
         }else if(interaction.commandName==='addrole') {
             interaction.reply({ content: 'New role added'})
         }
+     }else if(interaction.isSelectMenu()){
+        if(interaction.customId === 'food_options') interaction.reply({ content: `You selected ${interaction.values[0]} for food`})
+        else if (interaction.customId === 'drink_options') interaction.reply({ content: `You selected ${interaction.values[0]} for drinks`})
      }
 })
 
