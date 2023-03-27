@@ -1,6 +1,6 @@
-const token = process.env.BOT_TOKEN
-const { ask } = require("../utils/ai.js");
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+const token = 'token'
+import { ask } from '../utils/ai.cjs'
+import { Client, Events, GatewayIntentBits } from 'discord.js'
 const client = new Client({
     intents:
      [GatewayIntentBits.Guilds,
