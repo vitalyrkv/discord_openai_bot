@@ -5,6 +5,7 @@ import OrderCommand from '../utils/commands/command_options.js'
 import RolesCommand from '../utils/commands/roles.js'
 import UsersCommand from '../utils/commands/user.js'
 import ChannelsCommand from '../utils/commands/channel.js'
+import WeatherCommand from '../utils/commands/weather.js'
 import BanCommand from '../utils/commands/ban.js'
 import geocode from '../utils/geocode.cjs'
 const geocode1   =  geocode
@@ -53,7 +54,7 @@ client.on('interactionCreate', (interaction) => {
 })
 
 async function main() {
-        const commands = [OrderCommand, RolesCommand, UsersCommand, ChannelsCommand, BanCommand]
+        const commands = [WeatherCommand, OrderCommand, RolesCommand, UsersCommand, ChannelsCommand, BanCommand]
     try{
         console.log('Started refreshing application (/) commands')
         //put request to discord api to update a certain command
