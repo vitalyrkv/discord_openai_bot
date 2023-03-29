@@ -111,8 +111,8 @@ client.on('interactionCreate', (interaction) => {
 
     else if(interaction.isModalSubmit()){
         console.log('modal submitted')
-        const username = interaction.fields.getTextInputValue('username')
-        interaction.reply({ content: username })
+        const email = interaction.fields.getTextInputValue('username')
+        interaction.reply({ content: email })
         //e.g I can validate the email 
         //after all is validated and looks good I can hook up a database call with the values
     }
