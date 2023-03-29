@@ -1,4 +1,4 @@
-import { Client, Routes, TextInputStyle, User } from 'discord.js'
+import { Client, InteractionType, Routes, TextInputStyle, User } from 'discord.js'
 import { config } from 'dotenv'
 import { REST } from '@discordjs/rest'
 import OrderCommand from '../utils/commands/order.js'
@@ -107,6 +107,14 @@ client.on('interactionCreate', (interaction) => {
     else if(interaction.isSelectMenu()){
         if(interaction.customId === 'food_options') interaction.reply({ content: `You selected ${interaction.values[0]} for food`})
         else if (interaction.customId === 'drink_options') interaction.reply({ content: `You selected ${interaction.values[0]} for drinks`})
+    }
+
+    else if(interaction.isModalSubmit()){
+        console.log('modal submitted')
+        const username = interaction.fields.getTextInputValue('username')
+        interaction.reply({ content: username })
+        //e.g I can validate the email 
+        //after all is validated and looks good I can hook up a database call with the values
     }
 })
 
