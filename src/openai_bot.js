@@ -1,4 +1,4 @@
-const token = 'token'
+const token = process.env.BOT_TOKEN
 import { ask } from '../utils/ai.cjs'
 import { Client, Events, GatewayIntentBits } from 'discord.js'
 const client = new Client({
